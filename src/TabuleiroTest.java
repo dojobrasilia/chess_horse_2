@@ -12,37 +12,26 @@ public class TabuleiroTest {
 	@Test
 	public void deve_andar_um_movimento_valido(){
 		Tabuleiro t = new Tabuleiro();
-		Point p1 = new Point(4,4);
-		
-		t.visita(p1);
-		Point[] caminho = t.anda(1);
-		
-		assertEquals(1, caminho.length);
-		assert_movimento_valido(p1, caminho[0]);
+		assert_anda_1(t, new Point(4,4));
 	}
+
 	
 	@Test
 	public void deve_andar_um_outro_movimento_valido(){
 		Tabuleiro t = new Tabuleiro();
-		Point p1 = new Point(3,3);
-		
-		t.visita(p1);
-		Point[] caminho = t.anda(1);
-		
-		assertEquals(1, caminho.length);
-		assert_movimento_valido(p1, caminho[0]);
+		assert_anda_1(t, new Point(3,3));
 	}
 
 	@Test
-	public void nao_deve_sair_canto_0_0(){
+	public void nao_deve_sair_canto_1_1(){
 		Tabuleiro t = new Tabuleiro();
-		Point p1 = new Point(1,1);
-		
-		t.visita(p1);
-		Point[] caminho = t.anda(1);
-		
-		assertEquals(1, caminho.length);
-		assert_movimento_valido(p1, caminho[0]);
+		assert_anda_1(t, new Point(1,1));
+	}
+	
+	@Test
+	public void nao_deve_sair_canto_1_8(){
+		Tabuleiro t = new Tabuleiro();
+		assert_anda_1(t, new Point(1,8));
 	}
 	
 	@Test
@@ -54,6 +43,14 @@ public class TabuleiroTest {
 		assertEquals(p1,t.getOndeEstou());
 	}
 	
+
+	private void assert_anda_1(Tabuleiro t, Point p1) {
+		t.visita(p1);
+		Point[] caminho = t.anda(1);
+		
+		assertEquals(1, caminho.length);
+		assert_movimento_valido(p1, caminho[0]);
+	}
 
 	private void assert_movimento_valido(Point pi, Point pf) {
 		int mov_x = Math.abs(pf.x-pi.x);

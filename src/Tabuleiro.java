@@ -10,11 +10,17 @@ public class Tabuleiro {
 	}
 
 	public Point[] anda(int i) {
-		Point p[] = null;
-		if(ondeEstou.x-1>0 && ondeEstou.y-2 > 0)
-			p = new Point[] {new Point(ondeEstou.x-1,ondeEstou.y-2)};
-		else {
-			p = new Point[] {new Point(ondeEstou.x+1,ondeEstou.y+2)};
+		Point p[] = {new Point()};
+		
+		if(ondeEstou.x-1 > 0 && ondeEstou.y-2 > 0){
+			p[0].x = ondeEstou.x-1;
+			p[0].y = ondeEstou.y-2;
+		}else if (ondeEstou.x+1 < 9 && ondeEstou.y+2 < 9){
+			p[0].x = ondeEstou.x+1;
+			p[0].y = ondeEstou.y+2;
+		}else{
+			p[0].x = ondeEstou.x+1;
+			p[0].y = ondeEstou.y-2;
 		}
 		return p;
 	}
