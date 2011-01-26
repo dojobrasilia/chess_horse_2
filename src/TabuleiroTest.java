@@ -16,28 +16,17 @@ public class TabuleiroTest {
 	public void setUp() {
 		t = new Tabuleiro();
 	}
-
-	@Test
-	public void deve_andar_um_movimento_valido(){
-		assert_anda_1(t, new Point(4,4));
-	}
 	
 	@Test
-	public void deve_andar_um_outro_movimento_valido(){
-		assert_anda_1(t, new Point(3,3));
-	}
-
-	@Test
-	public void nao_deve_sair_canto_1_1(){
-		assert_anda_1(t, new Point(1,1));
-	}
-	
-	@Test
-	public void nao_deve_sair_canto_1_8(){
-		assert_anda_1(t, new Point(1,8));
+	public void nao_deve_sair_das_bordas(){
+		for (int i = 1; i < 9; i++) {
+			for (int j = 1; j < 9; j++) {
+				assert_anda_1(t, new Point(i,j));
+			}
+		}
 	}
 	
-	@Test
+	@Test//Testa o getter
 	public void deve_visitar_uma_casa_inicial(){
 		Point p1 = new Point(3,3);
 		t.visita(p1);
