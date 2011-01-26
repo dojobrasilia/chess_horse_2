@@ -2,6 +2,7 @@ import static junit.framework.Assert.*;
 
 import java.awt.Point;
 
+import org.junit.Before;
 import org.junit.Test;
 
 //	tabuleiro.visita(x,y)
@@ -9,34 +10,35 @@ import org.junit.Test;
 
 public class TabuleiroTest {
 
-	@Test
-	public void deve_andar_um_movimento_valido(){
-		Tabuleiro t = new Tabuleiro();
-		assert_anda_1(t, new Point(4,4));
+	private Tabuleiro t;
+
+	@Before
+	public void setUp() {
+		t = new Tabuleiro();
 	}
 
+	@Test
+	public void deve_andar_um_movimento_valido(){
+		assert_anda_1(t, new Point(4,4));
+	}
 	
 	@Test
 	public void deve_andar_um_outro_movimento_valido(){
-		Tabuleiro t = new Tabuleiro();
 		assert_anda_1(t, new Point(3,3));
 	}
 
 	@Test
 	public void nao_deve_sair_canto_1_1(){
-		Tabuleiro t = new Tabuleiro();
 		assert_anda_1(t, new Point(1,1));
 	}
 	
 	@Test
 	public void nao_deve_sair_canto_1_8(){
-		Tabuleiro t = new Tabuleiro();
 		assert_anda_1(t, new Point(1,8));
 	}
 	
 	@Test
 	public void deve_visitar_uma_casa_inicial(){
-		Tabuleiro t  = new Tabuleiro();
 		Point p1 = new Point(3,3);
 		t.visita(p1);
 		
@@ -49,6 +51,7 @@ public class TabuleiroTest {
 		Point[] caminho = t.anda(1);
 		
 		assertEquals(1, caminho.length);
+		
 		assert_movimento_valido(p1, caminho[0]);
 	}
 
