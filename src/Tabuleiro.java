@@ -1,5 +1,7 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -7,6 +9,7 @@ public class Tabuleiro {
 	
 	private Point ondeEstou;
 	private boolean[][] jaEstiveAqui;
+	private EscoreMatrix escoreMatrix = new EscoreMatrix();
 
 	public Tabuleiro() {
 		jaEstiveAqui = new boolean[9][9];
@@ -14,6 +17,7 @@ public class Tabuleiro {
 	
 	public void visita(Point p) {
 		jaEstiveAqui[p.x][p.y]= true;
+		escoreMatrix.visita(p.x, p.y);
 		ondeEstou=p;
 	}
 
@@ -28,7 +32,6 @@ public class Tabuleiro {
 	private void tenta_andar_casa(Point[] posicoes_visitadas, int passo_atual, int n) {
 		Point[] posicoes_validas = obtem_movimentos_valido();
 		
-		
 		for (int j = 0; j < posicoes_validas.length ; j++){
 			visita(posicoes_validas[j] );
 			posicoes_visitadas[passo_atual] = posicoes_validas[j];
@@ -37,7 +40,10 @@ public class Tabuleiro {
 					tenta_andar_casa(posicoes_visitadas, passo_atual+1, n);
 				}
 				return;
-			} catch (NaoTemMaisMovimentoValidoException e) {} // Será?
+			} catch (NaoTemMaisMovimentoValidoException e) {
+				jaEstiveAqui[posicoes_validas[j].x][posicoes_validas[j].y]= false;
+				escoreMatrix.desvisita(posicoes_validas[j].x, posicoes_validas[j].y);
+			}
 		}
 		throw new NaoTemMaisMovimentoValidoException();
 	}
@@ -58,8 +64,14 @@ public class Tabuleiro {
 		
 		if (movi_validos.isEmpty()) 
 		  throw new NaoTemMaisMovimentoValidoException();
-		else
+		else{
+			Collections.sort(movi_validos, new Comparator<Point>() {
+				public int compare(Point o1, Point o2) {
+					return escoreMatrix.getEscore(o2.x, o2.y)-escoreMatrix.getEscore(o1.x, o1.y);
+				}
+			});
 			return movi_validos.toArray(new Point[movi_validos.size()]);
+		}
 	}
 	
 }

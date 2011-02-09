@@ -9,7 +9,7 @@ import org.junit.Test;
 //	[] tabuleiro.anda(3)
 
 public class TabuleiroTest {
-
+	
 	private Tabuleiro t;
 
 	@Before
@@ -73,11 +73,15 @@ public class TabuleiroTest {
 		assertEquals(2, ret.length);
 	}
 	
-	/*@Test
+	public void deve_retornar_dois_movimentos_com_rollback_a_partir_de_uma_situacao_montada(){
+		
+	}
+	
+	@Test
 	public void deve_concluir_o_dojo_sem_lancar_exception(){
 		t.visita(new Point(1,1));
 		t.anda(63);
-	}*/
+	}
 	
 	private void assert_anda_1(Tabuleiro t, Point p1) {
 		t.visita(p1);
